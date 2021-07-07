@@ -57,9 +57,9 @@ class CreateUserService {
       delegation_id,
     });
 
-    delete user.password;
-
     await userRepository.save(user);
+
+    delete user.password;
     return user;
   }
 }
