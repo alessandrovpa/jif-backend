@@ -89,6 +89,12 @@ class UpdateUserFilesService {
 
     await userRepository.save(user);
 
+    fs.readdir(uploadConfig.directory, (err, files) => {
+      for (const file of files) {
+        fs.promises.unlink(path.join(uploadConfig.directory, file));
+      }
+    });
+
     return user;
   }
 }

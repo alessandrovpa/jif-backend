@@ -7,14 +7,12 @@ const delegationRouter = Router();
 
 delegationRouter.get('/', async (req, res) => {
   const delegationRepository = getCustomRepository(DelegationRepository);
-  console.log(req.user);
   const delegations = await delegationRepository.find();
   return res.json(delegations);
 });
 
 delegationRouter.post('/', async (req, res) => {
   if (req.user.access > 0) {
-    console.log('entrou');
     return res.status(403).json({ error: 'Você não tem permissão para isso!' });
   }
 

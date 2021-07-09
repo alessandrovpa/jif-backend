@@ -11,7 +11,7 @@ const routes = Router();
 routes.use('/session', sessionRouter);
 
 routes.use(verifyAutenticated);
-routes.use('/delegation', delegationRouter);
 routes.use('/user', userRouter);
+routes.use('/delegation', delegationRouter);
 
 export default routes;
