@@ -8,9 +8,6 @@ interface RequestDTO {
   email: string;
   siape: string;
   contact: string;
-  portaria: string;
-  document: string;
-  document_back: string;
   access: number;
   delegation_id: string;
 }
@@ -21,9 +18,6 @@ class CreateUserService {
     email,
     siape,
     contact,
-    portaria,
-    document,
-    document_back,
     access,
     delegation_id,
   }: RequestDTO): Promise<User> {
@@ -50,10 +44,6 @@ class CreateUserService {
       siape,
       password: hashedPassword,
       contact,
-      portaria,
-      document,
-      document_back,
-      access,
       delegation_id,
     });
 

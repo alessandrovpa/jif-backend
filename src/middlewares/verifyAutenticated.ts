@@ -31,6 +31,9 @@ export default async function verifyAutenticated(
     if (!user) {
       throw new Error('Usuário inexistente');
     }
+    if (user.created_at === user.updated_at) {
+      throw new Error('Você deve enviar seus documentos para prosseguir');
+    }
     req.user = {
       id: sub,
       access: user.access,

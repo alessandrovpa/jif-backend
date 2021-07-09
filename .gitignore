@@ -3,3 +3,23 @@ node_modules
 
 tmp/*
 !tmp/.gitkeep
+
+!tmp/files/
+tmp/files/*
+!tmp/files/.gitkeep
+
+!tmp/files/user
+tmp/files/user/*
+!tmp/files/user/.gitkeep
+
+!tmp/files/user/document
+tmp/files/user/document/*
+!tmp/files/user/document/.gitkeep
+
+!tmp/files/user/document_back
+tmp/files/user/document_back/*
+!tmp/files/user/document_back/.gitkeep
+
+!tmp/files/user/portaria
+tmp/files/user/portaria/*
+!tmp/files/user/portaria/.gitkeep

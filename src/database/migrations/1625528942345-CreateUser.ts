@@ -48,7 +48,7 @@ export default class CreateUser1625528942345 implements MigrationInterface {
           {
             name: 'document',
             type: 'varchar',
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: 'document_back',
