@@ -2,6 +2,7 @@ import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import User from '../models/User';
 import Delegation from '../models/Delegation';
+import AppError from '../errors/AppError';
 
 interface RequestDTO {
   name: string;
@@ -26,14 +27,14 @@ class CreateUserService {
 
     const verifyEmailAlreadyUsed = await userRepository.findOne({ email });
     if (verifyEmailAlreadyUsed) {
-      throw Error('Este email já está em uso');
+      throw new AppError('Este email já está em uso');
     }
 
     const verifyDelegationExist = await delegationRepository.findOne(
       delegation_id,
     );
     if (!verifyDelegationExist) {
-      throw Error('Invalid delegation');
+      throw new AppError('Invalid delegation');
     }
 
     const hashedPassword = await hash('123456', 8);

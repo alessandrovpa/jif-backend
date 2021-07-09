@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import User from '../models/User';
 import uploadConfig from '../config/upload';
+import AppError from '../errors/AppError';
 
 interface RequestDTO {
   portaria: string;
@@ -22,7 +23,7 @@ class UpdateUserFilesService {
     const user = await userRepository.findOne(user_id);
 
     if (!user) {
-      throw new Error('Usuário inválido');
+      throw new AppError('Usuário inválido', 401);
     }
 
     if (user.portaria) {

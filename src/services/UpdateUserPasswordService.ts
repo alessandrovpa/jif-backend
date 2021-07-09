@@ -1,6 +1,7 @@
 import { getRepository } from 'typeorm';
 import { compare, hash } from 'bcryptjs';
 import User from '../models/User';
+import AppError from '../errors/AppError';
 
 interface RequestDTO {
   old_password: string;
@@ -19,15 +20,15 @@ class UpdateUserPassword {
     const userRepository = getRepository(User);
     const user = await userRepository.findOne(user_id);
     if (!user) {
-      throw new Error('Usuário inválido');
+      throw new AppError('Usuário inválido', 401);
     }
     const verifyPassword = await compare(old_password, user.password);
     if (!verifyPassword) {
-      throw new Error('Senha incorreta');
+      throw new AppError('Senha incorreta', 401);
     }
 
     if (new_password != confirm_password) {
-      throw new Error('Senha de confirmação inválida!');
+      throw new AppError('Senha de confirmação inválida!');
     }
 
     const hashedPassword = await hash(new_password, 8);

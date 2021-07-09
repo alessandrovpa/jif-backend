@@ -3,6 +3,7 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import jwtConfig from '../config/jwtConfig';
 import User from '../models/User';
+import AppError from '../errors/AppError';
 
 interface RequestDTO {
   email: string;
@@ -17,12 +18,12 @@ class CreateSessionService {
     const userRepository = getRepository(User);
     const user = await userRepository.findOne({ email });
     if (!user) {
-      throw Error('Email e/ou senha incorretos');
+      throw new AppError('Email e/ou senha incorretos');
     }
 
     const verifyPassword = await compare(password, user.password);
     if (!verifyPassword) {
-      throw Error('Email e/ou senha incorretos');
+      throw new AppError('Email e/ou senha incorretos');
     }
 
     delete user.password;

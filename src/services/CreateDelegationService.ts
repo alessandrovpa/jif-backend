@@ -1,5 +1,6 @@
 import { getRepository } from 'typeorm';
 import Delegation from '../models/Delegation';
+import AppError from '../errors/AppError';
 
 interface Request {
   name: string;
@@ -11,13 +12,13 @@ class CreateDelegationService {
     const delegationRepository = getRepository(Delegation);
     const verifyNameAlreadyUsed = await delegationRepository.findOne({ name });
     if (verifyNameAlreadyUsed) {
-      throw Error('Nome de delegação já utilizado');
+      throw new AppError('Nome de delegação já utilizado');
     }
     const verifyAbreviationAlreadyUsed = await delegationRepository.findOne({
       abreviation,
     });
     if (verifyAbreviationAlreadyUsed) {
-      throw Error('Abreviação de delegação já utilizado');
+      throw new AppError('Abreviação de delegação já utilizado');
     }
     const delegation = delegationRepository.create({ name, abreviation });
     await delegationRepository.save(delegation);
