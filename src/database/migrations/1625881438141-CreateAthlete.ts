@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateUser1625528942345 implements MigrationInterface {
+export class CreateAthlete1625881438141 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'user',
+        name: 'athlete',
         columns: [
           {
             name: 'id',
@@ -26,12 +26,18 @@ export default class CreateUser1625528942345 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'siape',
-            type: 'varchar',
+            name: 'birth',
+            type: 'date',
             isNullable: false,
           },
           {
-            name: 'password',
+            name: 'identity',
+            type: 'varchar',
+            isNullable: false,
+            isUnique: true,
+          },
+          {
+            name: 'genre',
             type: 'varchar',
             isNullable: false,
           },
@@ -41,7 +47,7 @@ export default class CreateUser1625528942345 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'portaria',
+            name: 'picture',
             type: 'varchar',
             isNullable: true,
           },
@@ -56,10 +62,25 @@ export default class CreateUser1625528942345 implements MigrationInterface {
             isNullable: true,
           },
           {
-            name: 'access',
-            type: 'integer',
+            name: 'authorization',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'nickname',
+            type: 'varchar',
             isNullable: false,
-            default: 5,
+          },
+          {
+            name: 'game_id',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'status',
+            type: 'integer',
+            default: 0,
+            isNullable: false,
           },
           {
             name: 'created_at',
@@ -79,6 +100,6 @@ export default class CreateUser1625528942345 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user');
+    await queryRunner.dropTable('athlete');
   }
 }

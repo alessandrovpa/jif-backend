@@ -29,7 +29,9 @@ export default async function verifyAutenticated(
     const decoded = verify(token, jwtConfig.secret);
     const { sub } = decoded as TokenPayload;
     const getUser = getRepository(User);
-    const user = await getUser.findOne(sub);
+    const user = await getUser.findOne(sub, {
+      select: ['id', 'access', 'delegation_id'],
+    });
     if (!user) {
       throw new Error('Usuário inexistente');
     }
@@ -43,6 +45,7 @@ export default async function verifyAutenticated(
     req.user = {
       id: sub,
       access: user.access,
+      delegation_id: user.delegation_id,
     };
   } catch (err) {
     throw new AppError(err.message, 401);

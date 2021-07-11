@@ -31,11 +31,55 @@ const userDocumentBackFolder = path.resolve(
   'document_back',
 );
 
+const athletePictureFolder = path.resolve(
+  __dirname,
+  '..',
+  '..',
+  'tmp',
+  'files',
+  'athlete',
+  'picture',
+);
+const athleteDocumentFolder = path.resolve(
+  __dirname,
+  '..',
+  '..',
+  'tmp',
+  'files',
+  'athlete',
+  'document',
+);
+const athleteDocumentBackFolder = path.resolve(
+  __dirname,
+  '..',
+  '..',
+  'tmp',
+  'files',
+  'athlete',
+  'document_back',
+);
+const athleteAuthorizationFolder = path.resolve(
+  __dirname,
+  '..',
+  '..',
+  'tmp',
+  'files',
+  'athlete',
+  'authorization',
+);
+
 export default {
   directory: tmpFolder,
-  portariaFolder: userPortariaFolder,
-  documentFolder: userDocumentFolder,
-  documentBackFolder: userDocumentBackFolder,
+
+  userPortariaFolder,
+  userDocumentFolder,
+  userDocumentBackFolder,
+
+  athletePictureFolder,
+  athleteDocumentFolder,
+  athleteDocumentBackFolder,
+  athleteAuthorizationFolder,
+
   storage: multer.diskStorage({
     destination: tmpFolder,
     filename(request, file, callback) {

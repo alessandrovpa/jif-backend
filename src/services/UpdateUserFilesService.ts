@@ -28,7 +28,7 @@ class UpdateUserFilesService {
 
     if (user.portaria) {
       const userPortariaFilePath = path.join(
-        uploadConfig.portariaFolder,
+        uploadConfig.userPortariaFolder,
         user.portaria,
       );
       const userPortariaFileExist = await fs.promises.stat(
@@ -39,7 +39,7 @@ class UpdateUserFilesService {
       }
     }
     const tmpPortaria = path.join(uploadConfig.directory, portaria);
-    const finalPortaria = path.join(uploadConfig.portariaFolder, portaria);
+    const finalPortaria = path.join(uploadConfig.userPortariaFolder, portaria);
     fs.rename(tmpPortaria, finalPortaria, function (err) {
       if (err) console.log('ERROR: ' + err);
     });
@@ -48,7 +48,7 @@ class UpdateUserFilesService {
 
     if (user.document) {
       const userDocumentFilePath = path.join(
-        uploadConfig.documentFolder,
+        uploadConfig.userDocumentFolder,
         user.document,
       );
       const userDocumentFileExist = await fs.promises.stat(
@@ -60,14 +60,14 @@ class UpdateUserFilesService {
     }
 
     const tmpDocument = path.join(uploadConfig.directory, document);
-    const finalDocument = path.join(uploadConfig.documentFolder, document);
+    const finalDocument = path.join(uploadConfig.userDocumentFolder, document);
     fs.rename(tmpDocument, finalDocument, () => {});
 
     user.document = document;
 
     if (user.document_back) {
       const userDocumentBackFilePath = path.join(
-        uploadConfig.documentBackFolder,
+        uploadConfig.userDocumentBackFolder,
         user.document_back,
       );
       const userDocumentBackFileExist = await fs.promises.stat(
@@ -80,7 +80,7 @@ class UpdateUserFilesService {
 
     const tmpDocumentBack = path.join(uploadConfig.directory, document_back);
     const finalDocumentBack = path.join(
-      uploadConfig.documentBackFolder,
+      uploadConfig.userDocumentBackFolder,
       document_back,
     );
     fs.rename(tmpDocumentBack, finalDocumentBack, () => {});

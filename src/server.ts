@@ -11,11 +11,34 @@ import './database';
 
 app.use(express.json());
 
-app.use('/files/user/portaria', express.static(uploadConfig.portariaFolder));
-app.use('/files/user/document', express.static(uploadConfig.documentFolder));
+app.use(
+  '/files/user/portaria',
+  express.static(uploadConfig.userPortariaFolder),
+);
+app.use(
+  '/files/user/document',
+  express.static(uploadConfig.userDocumentFolder),
+);
 app.use(
   '/files/user/document_back',
-  express.static(uploadConfig.documentBackFolder),
+  express.static(uploadConfig.userDocumentBackFolder),
+);
+
+app.use(
+  '/files/athlete/pictire',
+  express.static(uploadConfig.athletePictureFolder),
+);
+app.use(
+  '/files/athlete/document',
+  express.static(uploadConfig.athleteDocumentFolder),
+);
+app.use(
+  '/files/athlete/document_back',
+  express.static(uploadConfig.athleteDocumentBackFolder),
+);
+app.use(
+  '/files/athlete/authorization',
+  express.static(uploadConfig.athleteAuthorizationFolder),
 );
 
 app.use(routes);

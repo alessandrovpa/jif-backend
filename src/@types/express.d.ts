@@ -3,6 +3,7 @@ declare namespace Express {
     user: {
       id: string;
       access: number;
+      delegation_id: string;
     };
   }
 }
