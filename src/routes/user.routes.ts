@@ -2,8 +2,11 @@ import { Router } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import UpdateUserFilesService from '../services/UpdateUserFilesService';
 import UpdateUserPasswordService from '../services/UpdateUserPasswordService';
+import ListUserService from '../services/ListUserService';
+import FindUserService from '../services/FindUserService';
 import multer from 'multer';
 import uploadConfig from '../config/upload';
+import AppError from '../errors/AppError';
 
 const upload = multer(uploadConfig);
 
@@ -59,5 +62,21 @@ userRouter.post(
     return res.json(user);
   },
 );
+
+userRouter.get('/', async (req, res) => {
+  const listUser = new ListUserService();
+  const findUser = new FindUserService();
+  const { user_id } = req.query;
+  if (req.user.access > 1) {
+    throw new AppError('Permissão negada');
+  }
+  if (user_id) {
+    const user = await findUser.execute(user_id);
+    return res.json(user);
+  } else {
+    const users = await listUser.execute();
+    return res.json(users);
+  }
+});
 
 export default userRouter;
