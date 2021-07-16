@@ -8,7 +8,7 @@ import {
 
 @Entity('delegation')
 class Delegation {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('increment')
   id: string;
 
   @Column()

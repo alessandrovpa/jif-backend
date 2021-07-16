@@ -12,7 +12,7 @@ import Athlete from './Athlete';
 
 @Entity('modality')
 class Modality {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('increment')
   id: string;
 
   @Column()

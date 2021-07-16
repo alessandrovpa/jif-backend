@@ -47,3 +47,5 @@ tmp/files/athlete/authorization/*
 .env
 
 dist
+
+ormconfig.js

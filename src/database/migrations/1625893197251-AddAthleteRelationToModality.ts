@@ -18,8 +18,7 @@ export default class AddAthleteRelationToModality1625893197251
             type: 'varchar',
             isPrimary: true,
             isNullable: false,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+            generationStrategy: 'increment',
           },
           {
             name: 'athlete_id',

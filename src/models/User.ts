@@ -13,7 +13,7 @@ import Delegation from './Delegation';
 
 @Entity('user')
 class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('increment')
   id: string;
 
   @Column()

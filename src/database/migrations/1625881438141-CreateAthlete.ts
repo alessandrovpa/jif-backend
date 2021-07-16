@@ -11,8 +11,7 @@ export default class CreateAthlete1625881438141 implements MigrationInterface {
             type: 'varchar',
             isPrimary: true,
             isNullable: false,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+            generationStrategy: 'increment',
           },
           {
             name: 'name',
