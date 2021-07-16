@@ -13,8 +13,7 @@ export default class CreateDelegation1625516426361
             type: 'varchar',
             isPrimary: true,
             isNullable: false,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+            generationStrategy: 'increment',
           },
           {
             name: 'name',
