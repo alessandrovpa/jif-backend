@@ -37,7 +37,7 @@ export default class CreateModality1625883006393 implements MigrationInterface {
           {
             name: 'created_at',
             type: 'timestamp',
-            default: '0000-00-00 00:00:00',
+            default: '-00-00 00:00:00',
           },
           {
             name: 'updated_at',

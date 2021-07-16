@@ -32,7 +32,7 @@ export default class CreateFunction1626380687582 implements MigrationInterface {
           {
             name: 'updated_at',
             type: 'timestamp',
-            default: '0000-00-00 00:00:00',
+            default: '-00-00 00:00:00',
           },
         ],
       }),
