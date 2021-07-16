@@ -11,7 +11,8 @@ export default class CreateFunction1626380687582 implements MigrationInterface {
             type: 'varchar',
             isPrimary: true,
             isNullable: false,
-            generationStrategy: 'increment',
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()',
           },
           {
             name: 'name',
@@ -26,11 +27,12 @@ export default class CreateFunction1626380687582 implements MigrationInterface {
           {
             name: 'created_at',
             type: 'timestamp',
+            default: 'now()',
           },
           {
             name: 'updated_at',
             type: 'timestamp',
-            default: 'now()',
+            default: '0000-00-00 00:00:00',
           },
         ],
       }),

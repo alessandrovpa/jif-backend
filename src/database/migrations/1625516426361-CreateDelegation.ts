@@ -30,6 +30,7 @@ export default class CreateDelegation1625516426361
           {
             name: 'created_at',
             type: 'timestamp',
+            default: '0000-00-00 00:00:00',
           },
           {
             name: 'updated_at',
