@@ -4,6 +4,8 @@ import UpdateUserFilesService from '../services/UpdateUserFilesService';
 import UpdateUserPasswordService from '../services/UpdateUserPasswordService';
 import ListUserService from '../services/ListUserService';
 import FindUserService from '../services/FindUserService';
+import GetUserAccessService from '../services/GetUserAcessService';
+import DeleteUserService from '../services/DeleteUserService';
 import multer from 'multer';
 import uploadConfig from '../config/upload';
 import AppError from '../errors/AppError';
@@ -13,7 +15,7 @@ const upload = multer(uploadConfig);
 const userRouter = Router();
 
 userRouter.post('/', async (req, res) => {
-  const { name, email, siape, contact, access, delegation_id } = req.body;
+  const { name, email, siape, contact, delegation_id, function_id } = req.body;
 
   const createUser = new CreateUserService();
   const user = await createUser.execute({
@@ -21,8 +23,8 @@ userRouter.post('/', async (req, res) => {
     email,
     siape,
     contact,
-    access,
     delegation_id,
+    function_id,
   });
   return res.json(user);
 });
@@ -67,16 +69,33 @@ userRouter.get('/', async (req, res) => {
   const listUser = new ListUserService();
   const findUser = new FindUserService();
   const { user_id } = req.query;
-  if (req.user.access > 1) {
-    throw new AppError('Permissão negada');
-  }
   if (user_id) {
+    if (req.user.access > 1 && req.user.id != user_id) {
+      throw new AppError('Permissão negada');
+    }
     const user = await findUser.execute(user_id);
     return res.json(user);
   } else {
-    const users = await listUser.execute();
+    const { delegation_id, access } = req.user;
+    const users = await listUser.execute({ delegation_id, access });
     return res.json(users);
   }
+});
+
+userRouter.get('/access', async (req, res) => {
+  const { id } = req.user;
+  const getUserAcess = new GetUserAccessService();
+  const access = await getUserAcess.execute(id);
+
+  return res.json(access);
+});
+
+userRouter.delete('/', async (req, res) => {
+  const { user_id } = req.body;
+  const { access } = req.user;
+  const deleteUser = new DeleteUserService();
+  const result = await deleteUser.execute({ user_id, access });
+  return res.json({ ok: result });
 });
 
 export default userRouter;

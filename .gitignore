@@ -43,3 +43,7 @@ tmp/files/athlete/picture/*
 !tmp/files/athlete/authorization
 tmp/files/athlete/authorization/*
 !tmp/files/athlete/authorization/.gitkeep
+
+.env
+
+dist

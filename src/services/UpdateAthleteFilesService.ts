@@ -8,10 +8,10 @@ import path from 'path';
 interface RequestDTO {
   athlete_id: string;
   delegation_id: string;
-  picture: string;
-  document: string;
-  document_back: string;
-  authorization: string;
+  picture?: string;
+  document?: string;
+  document_back?: string;
+  authorization?: string;
 }
 
 class UpdateAthleteFilesService {

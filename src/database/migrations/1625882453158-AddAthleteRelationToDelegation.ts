@@ -5,7 +5,7 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class AddAthleteRelationToDelegation1625882453158
+export default class AddAthleteRelationToDelegation1625882453158
   implements MigrationInterface
 {
   public async up(queryRunner: QueryRunner): Promise<void> {

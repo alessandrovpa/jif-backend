@@ -6,6 +6,8 @@ import CreateAthleteService from '../services/CreateAthleteService';
 import UpdateAthleteFilesService from '../services/UpdateAthleteFilesService';
 import ListAthleteService from '../services/ListAthleteService';
 import FindAthleteService from '../services/FindAthleteService';
+import UpdateAthleteStatusService from '../services/UpdateAthleteStatusService';
+import DeleteAthleteService from '../services/DeleteAthleteService';
 
 const upload = multer(uploadConfig);
 
@@ -54,13 +56,27 @@ athleteRouter.post(
     const { athlete_id } = req.body;
     const { delegation_id } = req.user;
 
-    const picture = req.files.picture[0].filename;
-    const document = req.files.document[0].filename;
-    const document_back = req.files.document_back[0].filename;
-    const authorization = req.files.authorization[0].filename;
+    let picture;
+    if (req.files.picture) {
+      picture = req.files.picture[0].filename;
+    }
+
+    let document;
+    if (req.files.document) {
+      document = req.files.document[0].filename;
+    }
+
+    let document_back;
+    if (req.files.document_back) {
+      document_back = req.files.document_back[0].filename;
+    }
+
+    let authorization;
+    if (req.files.authorization) {
+      authorization = req.files.authorization[0].filename;
+    }
 
     const updateAthleteFile = new UpdateAthleteFilesService();
-
     const athlete = await updateAthleteFile.execute({
       athlete_id,
       delegation_id,
@@ -69,7 +85,6 @@ athleteRouter.post(
       document_back,
       authorization,
     });
-
     return res.json(athlete);
   },
 );
@@ -99,6 +114,35 @@ athleteRouter.get('/', async (req, res) => {
   const athletes = await listAthletes.execute(delegation_id);
 
   return res.json(athletes);
+});
+
+athleteRouter.put('/:athlete_id/status', async (req, res) => {
+  if (req.user.access > 1) {
+    throw new AppError('Você não tem permissão para homologar inscrições!');
+  }
+  const updateAthleteStatus = new UpdateAthleteStatusService();
+  const { athlete_id } = req.params;
+  const { status, observation } = req.body;
+
+  const athlete = await updateAthleteStatus.execute({
+    athlete_id,
+    status,
+    observation,
+  });
+
+  return res.json(athlete);
+});
+
+athleteRouter.delete('/', async (req, res) => {
+  const { athlete_id } = req.body;
+  const { access, delegation_id } = req.user;
+  const deleteAthlete = new DeleteAthleteService();
+  const result = await deleteAthlete.execute({
+    athlete_id,
+    access,
+    delegation_id,
+  });
+  return res.json({ ok: result });
 });
 
 export default athleteRouter;

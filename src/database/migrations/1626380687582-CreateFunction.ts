@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateModality1625883006393 implements MigrationInterface {
+export default class CreateFunction1626380687582 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'modality',
+        name: 'function',
         columns: [
           {
             name: 'id',
@@ -16,24 +16,13 @@ export default class CreateModality1625883006393 implements MigrationInterface {
           },
           {
             name: 'name',
+            isNullable: false,
             type: 'varchar',
-            isUnique: false,
-            isNullable: false,
           },
           {
-            name: 'genre',
-            type: 'varchar',
+            name: 'access',
             isNullable: false,
-          },
-          {
-            name: 'holder',
             type: 'integer',
-            isNullable: false,
-          },
-          {
-            name: 'backup',
-            type: 'integer',
-            isNullable: false,
           },
           {
             name: 'created_at',
@@ -51,6 +40,6 @@ export default class CreateModality1625883006393 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('modality');
+    await queryRunner.dropTable('function');
   }
 }

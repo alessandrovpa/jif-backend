@@ -65,27 +65,29 @@ class UpdateUserFilesService {
 
     user.document = document;
 
-    if (user.document_back) {
-      const userDocumentBackFilePath = path.join(
-        uploadConfig.userDocumentBackFolder,
-        user.document_back,
-      );
-      const userDocumentBackFileExist = await fs.promises.stat(
-        userDocumentBackFilePath,
-      );
-      if (userDocumentBackFileExist) {
-        await fs.promises.unlink(userDocumentBackFilePath);
+    if (document_back) {
+      if (user.document_back) {
+        const userDocumentBackFilePath = path.join(
+          uploadConfig.userDocumentBackFolder,
+          user.document_back,
+        );
+        const userDocumentBackFileExist = await fs.promises.stat(
+          userDocumentBackFilePath,
+        );
+        if (userDocumentBackFileExist) {
+          await fs.promises.unlink(userDocumentBackFilePath);
+        }
       }
+
+      const tmpDocumentBack = path.join(uploadConfig.directory, document_back);
+      const finalDocumentBack = path.join(
+        uploadConfig.userDocumentBackFolder,
+        document_back,
+      );
+      fs.rename(tmpDocumentBack, finalDocumentBack, () => {});
+
+      user.document_back = document_back;
     }
-
-    const tmpDocumentBack = path.join(uploadConfig.directory, document_back);
-    const finalDocumentBack = path.join(
-      uploadConfig.userDocumentBackFolder,
-      document_back,
-    );
-    fs.rename(tmpDocumentBack, finalDocumentBack, () => {});
-
-    user.document_back = document_back;
 
     await userRepository.save(user);
 

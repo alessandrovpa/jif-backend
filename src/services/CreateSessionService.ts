@@ -4,6 +4,7 @@ import { sign } from 'jsonwebtoken';
 import jwtConfig from '../config/jwtConfig';
 import User from '../models/User';
 import AppError from '../errors/AppError';
+import { classToClass } from 'class-transformer';
 
 interface RequestDTO {
   email: string;
@@ -16,7 +17,10 @@ class CreateSessionService {
     password,
   }: RequestDTO): Promise<{ user: User; token: any }> {
     const userRepository = getRepository(User);
-    const user = await userRepository.findOne({ email });
+    const user = await userRepository.findOne(
+      { email },
+      { relations: ['delegation'] },
+    );
     if (!user) {
       throw new AppError('Email e/ou senha incorretos');
     }
@@ -26,18 +30,12 @@ class CreateSessionService {
       throw new AppError('Email e/ou senha incorretos');
     }
 
-    delete user.password;
-    delete user.contact;
-    delete user.portaria;
-    delete user.document;
-    delete user.document_back;
-
     const token = sign({}, jwtConfig.secret, {
       subject: user.id,
       expiresIn: jwtConfig.expiresIn,
     });
 
-    return { user, token };
+    return { user: classToClass(user), token };
   }
 }
 

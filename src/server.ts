@@ -1,5 +1,7 @@
 import 'reflect-metadata';
+import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
+import cors from 'cors';
 import 'express-async-errors';
 const port = 3333;
 import routes from './routes/routes';
@@ -9,6 +11,7 @@ import AppError from './errors/AppError';
 const app = express();
 import './database';
 
+app.use(cors());
 app.use(express.json());
 
 app.use(
@@ -25,7 +28,7 @@ app.use(
 );
 
 app.use(
-  '/files/athlete/pictire',
+  '/files/athlete/picture',
   express.static(uploadConfig.athletePictureFolder),
 );
 app.use(
@@ -47,7 +50,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return res
       .status(err.statusCode)
-      .json({ status: 'error', error: err.message });
+      .json({ status: 'error', message: err.message });
   }
   console.log(err);
   return res

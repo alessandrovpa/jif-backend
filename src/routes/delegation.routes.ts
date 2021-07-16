@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { getCustomRepository } from 'typeorm';
 import DelegationRepository from '../repositories/DelegationRepository';
 import CreateDelegationService from '../services/CreateDelegationService';
+import DeleteDelegationService from '../services/DeleteDelegationService';
 
 const delegationRouter = Router();
 
@@ -20,6 +21,14 @@ delegationRouter.post('/', async (req, res) => {
   const createDelegation = new CreateDelegationService();
   const delegation = await createDelegation.execute({ name, abreviation });
   return res.json(delegation);
+});
+
+delegationRouter.delete('/', async (req, res) => {
+  const { delegation_id } = req.body;
+  const { access } = req.user;
+  const deleteDelegation = new DeleteDelegationService();
+  const result = await deleteDelegation.execute({ delegation_id, access });
+  return res.json({ ok: result });
 });
 
 export default delegationRouter;

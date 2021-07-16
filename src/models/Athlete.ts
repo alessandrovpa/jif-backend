@@ -9,6 +9,7 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
+import { Expose } from 'class-transformer';
 
 import Delegation from './Delegation';
 import Modality from './Modality';
@@ -38,15 +39,39 @@ class Athlete {
 
   @Column()
   picture: string;
+  @Expose({ name: 'picture_url' })
+  getPictureUrl(): string | null {
+    return this.picture
+      ? `${process.env.API_URL}/files/athlete/picture/${this.picture}`
+      : null;
+  }
 
   @Column()
   document: string;
+  @Expose({ name: 'document_url' })
+  getDocumentUrl(): string | null {
+    return this.document
+      ? `${process.env.API_URL}/files/athlete/document/${this.document}`
+      : null;
+  }
 
   @Column()
   document_back: string;
+  @Expose({ name: 'document_back_url' })
+  getDocumentBackUrl(): string | null {
+    return this.document_back
+      ? `${process.env.API_URL}/files/athlete/document_back/${this.document_back}`
+      : null;
+  }
 
   @Column()
   authorization: string;
+  @Expose({ name: 'authorization_url' })
+  getAuthorizationUrl(): string | null {
+    return this.authorization
+      ? `${process.env.API_URL}/files/athlete/authorization/${this.authorization}`
+      : null;
+  }
 
   @Column()
   nickname: string;
@@ -73,6 +98,9 @@ class Athlete {
   @ManyToMany(type => Modality, modality => modality.athletes)
   @JoinTable()
   modalities: Modality[];
+
+  @Column()
+  observation: string;
 }
 
 export default Athlete;

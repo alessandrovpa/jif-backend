@@ -2,15 +2,17 @@ import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import User from '../models/User';
 import Delegation from '../models/Delegation';
+import UserFunction from '../models/Function';
 import AppError from '../errors/AppError';
+import { classToClass } from 'class-transformer';
 
 interface RequestDTO {
   name: string;
   email: string;
   siape: string;
   contact: string;
-  access: number;
   delegation_id: string;
+  function_id: string;
 }
 
 class CreateUserService {
@@ -19,11 +21,12 @@ class CreateUserService {
     email,
     siape,
     contact,
-    access,
     delegation_id,
+    function_id,
   }: RequestDTO): Promise<User> {
     const delegationRepository = getRepository(Delegation);
     const userRepository = getRepository(User);
+    const funcitonRepository = getRepository(UserFunction);
 
     const verifyEmailAlreadyUsed = await userRepository.findOne({ email });
     if (verifyEmailAlreadyUsed) {
@@ -37,6 +40,15 @@ class CreateUserService {
       throw new AppError('Invalid delegation');
     }
 
+    if (!function_id) {
+      throw new AppError('Function not provided');
+    }
+
+    const userFunction = await funcitonRepository.findOne(function_id);
+    if (!userFunction) {
+      throw new AppError('Function not provided');
+    }
+
     const hashedPassword = await hash('123456', 8);
 
     const user = await userRepository.create({
@@ -46,12 +58,13 @@ class CreateUserService {
       password: hashedPassword,
       contact,
       delegation_id,
+      access: userFunction.access,
+      function: userFunction.name,
     });
 
     await userRepository.save(user);
 
-    delete user.password;
-    return user;
+    return classToClass(user);
   }
 }
 
