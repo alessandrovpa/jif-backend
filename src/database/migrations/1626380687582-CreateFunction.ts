@@ -27,12 +27,10 @@ export default class CreateFunction1626380687582 implements MigrationInterface {
           {
             name: 'created_at',
             type: 'timestamp',
-            default: 'now()',
           },
           {
             name: 'updated_at',
             type: 'timestamp',
-            default: '-00-00 00:00:00',
           },
         ],
       }),
