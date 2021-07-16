@@ -84,8 +84,6 @@ export default class CreateAthlete1625881438141 implements MigrationInterface {
           {
             name: 'created_at',
             type: 'timestamp',
-            default: 'now()',
-            isNullable: false,
           },
           {
             name: 'updated_at',
