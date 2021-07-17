@@ -5,7 +5,10 @@ class ListAthleteService {
   public async execute(delegation_id: string): Promise<Athlete[]> {
     const athleteRepository = getRepository(Athlete);
     const athletes = await athleteRepository.find({
-      delegation_id,
+      where: { delegation_id },
+      order: {
+        status: 'ASC',
+      },
     });
 
     return athletes;

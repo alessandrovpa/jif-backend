@@ -8,6 +8,7 @@ import ListAthleteService from '../services/ListAthleteService';
 import FindAthleteService from '../services/FindAthleteService';
 import UpdateAthleteStatusService from '../services/UpdateAthleteStatusService';
 import DeleteAthleteService from '../services/DeleteAthleteService';
+import UpdateAthleteService from '../services/UpdateAthleteService';
 
 const upload = multer(uploadConfig);
 
@@ -143,6 +144,37 @@ athleteRouter.delete('/', async (req, res) => {
     delegation_id,
   });
   return res.json({ ok: result });
+});
+
+athleteRouter.post('/:id/update', async (req, res) => {
+  const updateAthlete = new UpdateAthleteService();
+  const { id } = req.params;
+  const {
+    name,
+    email,
+    birth,
+    identity,
+    genre,
+    contact,
+    nickname,
+    game_id,
+    modalities,
+  } = req.body;
+
+  const athlete = await updateAthlete.execute({
+    id,
+    name,
+    email,
+    birth,
+    identity,
+    genre,
+    contact,
+    nickname,
+    game_id,
+    modalities,
+  });
+
+  return res.json(athlete);
 });
 
 export default athleteRouter;

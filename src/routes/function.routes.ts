@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import CreateFunctionService from '../services/CreateFunctionService';
 import ListFunctionsService from '../services/ListFunctionsService';
+import DeleteFunctionService from '../services/DeleteFunctionService';
 import AppError from '../errors/AppError';
 
 const functionRouter = Router();
@@ -22,6 +23,18 @@ functionRouter.get('/', async (req, res) => {
   const functions = await listFunctions.execute(access);
 
   return res.json(functions);
+});
+
+functionRouter.delete('/', async (req, res) => {
+  const deleteFunction = new DeleteFunctionService();
+  const { function_id } = req.body;
+  if (req.user.access > 1) {
+    throw new AppError('Permission denied', 401);
+  }
+
+  const result = await deleteFunction.execute(function_id);
+
+  return res.json({ ok: result });
 });
 
 export default functionRouter;
