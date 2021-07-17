@@ -6,6 +6,7 @@ import sessionRouter from './session.routes';
 import athleteRouter from './athlete.routes';
 import modalityRouter from './modality.routes';
 import functionRouter from './function.routes';
+import relatoryRouter from './relatory.routes';
 
 import CreateDefaultADMUser from '../services/CreateDefaultADMUser';
 
@@ -26,5 +27,6 @@ routes.use('/user', userRouter);
 routes.use('/delegation', delegationRouter);
 routes.use('/modality', modalityRouter);
 routes.use('/function', functionRouter);
+routes.use('/relatory', relatoryRouter);
 
 export default routes;
