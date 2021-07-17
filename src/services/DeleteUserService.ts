@@ -14,9 +14,6 @@ class DeleteUserService {
     if (!user) {
       throw new AppError('Usuário não encontrado');
     }
-    if (user.id === user_id) {
-      throw new AppError('Você não pode se apagar');
-    }
     if (user.access < access) {
       throw new AppError('Permissão negada');
     }

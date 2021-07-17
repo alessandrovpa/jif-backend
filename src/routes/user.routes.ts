@@ -92,7 +92,10 @@ userRouter.get('/access', async (req, res) => {
 
 userRouter.delete('/', async (req, res) => {
   const { user_id } = req.body;
-  const { access } = req.user;
+  const { access, id } = req.user;
+  if (user_id === id) {
+    throw new AppError('Você não pode se apagar');
+  }
   const deleteUser = new DeleteUserService();
   const result = await deleteUser.execute({ user_id, access });
   return res.json({ ok: result });
