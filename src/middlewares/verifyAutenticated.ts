@@ -30,7 +30,7 @@ export default async function verifyAutenticated(
     const { sub } = decoded as TokenPayload;
     const getUser = getRepository(User);
     const user = await getUser.findOne(sub, {
-      select: ['id', 'access', 'delegation_id'],
+      select: ['id', 'access', 'delegation_id', 'password'],
     });
     if (!user) {
       throw new Error('Usuário inexistente');
