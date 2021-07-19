@@ -34,7 +34,7 @@ class User {
 
   @Column()
   portaria: string;
-  @Expose({ name: 'potaria_url' })
+  @Expose({ name: 'portaria_url' })
   getPortariaUrl(): string | null {
     return this.portaria
       ? `${process.env.API_URL}/files/user/portaria/${this.portaria}`
