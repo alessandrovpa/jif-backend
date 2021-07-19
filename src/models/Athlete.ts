@@ -17,7 +17,7 @@ import Modality from './Modality';
 @Entity('athlete')
 class Athlete {
   @PrimaryGeneratedColumn('increment')
-  id: string;
+  id: number;
 
   @Column()
   name: string;

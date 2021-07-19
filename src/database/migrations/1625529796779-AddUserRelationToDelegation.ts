@@ -13,7 +13,7 @@ export default class AddUserRelationToDelegation1625529796779
       'user',
       new TableColumn({
         name: 'delegation_id',
-        type: 'varchar',
+        type: 'int',
         isNullable: false,
       }),
     );

@@ -14,7 +14,7 @@ import Delegation from './Delegation';
 @Entity('user')
 class User {
   @PrimaryGeneratedColumn('increment')
-  id: string;
+  id: number;
 
   @Column()
   name: string;

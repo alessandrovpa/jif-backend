@@ -13,7 +13,7 @@ export default class AddAthleteRelationToDelegation1625882453158
       'athlete',
       new TableColumn({
         name: 'delegation_id',
-        type: 'varchar',
+        type: 'int',
         isNullable: false,
       }),
     );

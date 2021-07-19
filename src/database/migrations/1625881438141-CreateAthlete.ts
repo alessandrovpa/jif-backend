@@ -8,7 +8,7 @@ export default class CreateAthlete1625881438141 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'int',
             isPrimary: true,
             isNullable: false,
             generationStrategy: 'increment',

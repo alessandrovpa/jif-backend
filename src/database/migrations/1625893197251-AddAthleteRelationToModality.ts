@@ -15,19 +15,19 @@ export default class AddAthleteRelationToModality1625893197251
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'int',
             isPrimary: true,
             isNullable: false,
             generationStrategy: 'increment',
           },
           {
             name: 'athlete_id',
-            type: 'varchar',
+            type: 'int',
             isNullable: false,
           },
           {
             name: 'modality_id',
-            type: 'varchar',
+            type: 'int',
             isNullable: false,
           },
         ],

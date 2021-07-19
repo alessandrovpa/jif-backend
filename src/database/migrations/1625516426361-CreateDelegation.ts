@@ -10,7 +10,7 @@ export default class CreateDelegation1625516426361
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'int',
             isPrimary: true,
             isNullable: false,
             generationStrategy: 'increment',

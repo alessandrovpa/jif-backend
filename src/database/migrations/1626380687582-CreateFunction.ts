@@ -8,7 +8,7 @@ export default class CreateFunction1626380687582 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'int',
             isPrimary: true,
             isNullable: false,
             generationStrategy: 'increment',
