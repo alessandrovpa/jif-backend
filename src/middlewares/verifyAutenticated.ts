@@ -4,7 +4,7 @@ import User from '../models/User';
 import { verify } from 'jsonwebtoken';
 import jwtConfig from '../config/jwtConfig';
 import AppError from '../errors/AppError';
-import { isEqual } from 'date-fns';
+import { compare } from 'bcryptjs';
 
 interface TokenPayload {
   iat: string;
@@ -35,11 +35,8 @@ export default async function verifyAutenticated(
     if (!user) {
       throw new Error('Usuário inexistente');
     }
-    console.log(req.route);
-    if (
-      req.originalUrl != '/user/firstlogin' &&
-      isEqual(user.created_at, user.updated_at)
-    ) {
+    const verifyPassword = await compare('123456', user.password);
+    if (req.originalUrl != '/user/firstlogin' && verifyPassword) {
       throw new Error('Você deve enviar seus documentos para prosseguir');
     }
     req.user = {
