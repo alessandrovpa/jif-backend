@@ -7,23 +7,45 @@ interface Response {
   reprovados: number;
 }
 
+interface RequestDTO {
+  delegation_id: string;
+  access: number;
+}
+
 class CreateAthleteRelatoryService {
-  public async execute(delegation_id: string): Promise<Response> {
+  public async execute({
+    delegation_id,
+    access,
+  }: RequestDTO): Promise<Response> {
     const athleteRepository = getRepository(Athlete);
-    const total = await athleteRepository.count({
-      where: {
-        delegation_id,
-      },
-    });
+    if (access > 1) {
+      const total = await athleteRepository.count({
+        where: {
+          delegation_id,
+        },
+      });
+      const aprovados = await athleteRepository.count({
+        where: {
+          delegation_id,
+          status: 1,
+        },
+      });
+      const reprovados = await athleteRepository.count({
+        where: {
+          delegation_id,
+          status: 2,
+        },
+      });
+      return { total, aprovados, reprovados };
+    }
+    const total = await athleteRepository.count();
     const aprovados = await athleteRepository.count({
       where: {
-        delegation_id,
         status: 1,
       },
     });
     const reprovados = await athleteRepository.count({
       where: {
-        delegation_id,
         status: 2,
       },
     });
