@@ -15,7 +15,14 @@ const upload = multer(uploadConfig);
 const userRouter = Router();
 
 userRouter.post('/', async (req, res) => {
-  const { name, email, siape, contact, delegation_id, function_id } = req.body;
+  const { name, email, siape, contact, function_id } = req.body;
+  const { access } = req.user;
+  let delegation_id;
+  if (access > 1) {
+    delegation_id = req.user.delegation_id;
+  } else {
+    delegation_id = req.body.delegation_id;
+  }
 
   const createUser = new CreateUserService();
   const user = await createUser.execute({

@@ -10,7 +10,7 @@ class ListUserService {
   public async execute({ delegation_id, access }: RequestDTO): Promise<User[]> {
     const userRepository = getRepository(User);
     let users: User[] = [];
-    if (access < 1) {
+    if (access <= 1) {
       users = await userRepository.find({ relations: ['delegation'] });
     } else if (access > 1) {
       users = await userRepository.find({
