@@ -76,14 +76,12 @@ userRouter.get('/', async (req, res) => {
   const listUser = new ListUserService();
   const findUser = new FindUserService();
   const { user_id } = req.query;
+  const { access, delegation_id } = req.user;
   if (user_id) {
-    if (req.user.access > 1 && req.user.id != user_id) {
-      throw new AppError('Permissão negada');
-    }
-    const user = await findUser.execute(user_id);
+    const user = await findUser.execute({ user_id, access, delegation_id });
     return res.json(user);
   } else {
-    const { delegation_id, access } = req.user;
+    const { delegation_id } = req.user;
     const users = await listUser.execute({ delegation_id, access });
     return res.json(users);
   }
