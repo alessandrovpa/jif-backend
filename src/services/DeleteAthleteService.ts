@@ -22,7 +22,7 @@ class DeleteAthleteService {
     if (!athlete) {
       throw new AppError('Atleta não encontrado');
     }
-    if (access > 1 || athlete.delegation_id != delegation_id) {
+    if (access > 1 && athlete.delegation_id != delegation_id) {
       throw new AppError('Permissão negada');
     }
     await athleteRepository.remove(athlete);
