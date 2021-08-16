@@ -49,6 +49,7 @@ class CreateModalityRelatoryService {
             return modality;
           }),
         );
+        if (modalityRelatory.length === 0) return delegation;
         finalRelatory.push({
           delegation: `${delegation.abreviation}`,
           relatory: modalityRelatory,
