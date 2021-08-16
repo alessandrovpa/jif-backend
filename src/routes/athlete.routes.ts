@@ -9,6 +9,7 @@ import FindAthleteService from '../services/FindAthleteService';
 import UpdateAthleteStatusService from '../services/UpdateAthleteStatusService';
 import DeleteAthleteService from '../services/DeleteAthleteService';
 import UpdateAthleteService from '../services/UpdateAthleteService';
+import ListAthleteByDelegationAndModalityService from '../services/ListAthleteByDelegationAndModalityService';
 
 const upload = multer(uploadConfig);
 
@@ -93,7 +94,9 @@ athleteRouter.post(
 athleteRouter.get('/', async (req, res) => {
   const listAthletes = new ListAthleteService();
   const findAthlete = new FindAthleteService();
-  let { delegation_id, athlete_id } = req.query;
+  const listAthletesByDelegationAndModality =
+    new ListAthleteByDelegationAndModalityService();
+  let { delegation_id, athlete_id, modality_id } = req.query;
 
   if (athlete_id) {
     const athlete = await findAthlete.execute(athlete_id);
@@ -104,9 +107,19 @@ athleteRouter.get('/', async (req, res) => {
       throw new AppError('Não autorizado');
     } else return res.json(athlete);
   }
+  if (modality_id) {
+    if (req.user.access > 1) {
+      throw new AppError('Permission denied');
+    }
+    const athletes = await listAthletesByDelegationAndModality.execute({
+      delegation_id,
+      modality_id,
+    });
+    return res.json(athletes);
+  }
   if (delegation_id) {
     if (req.user.access > 1) {
-      throw new AppError('Você não pode listar outras delegações');
+      throw new AppError('Você não pode listar atletas de outras delegações');
     }
   } else {
     delegation_id = req.user.delegation_id;

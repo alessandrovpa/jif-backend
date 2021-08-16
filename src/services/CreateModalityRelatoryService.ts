@@ -4,11 +4,13 @@ import Delegation from '../models/Delegation';
 import Modality from '../models/Modality';
 
 interface Relatory {
+  modality_id: number;
   modality: String;
   count: Number;
 }
 
 interface Response {
+  delegation_id: number;
   delegation: String;
   relatory: Relatory[];
 }
@@ -43,6 +45,7 @@ class CreateModalityRelatoryService {
               .getCount();
             if (countAthletes === 0) return modality;
             modalityRelatory.push({
+              modality_id: modality.id,
               modality: `${modality.name.toUpperCase()} - ${modality.genre.toUpperCase()}`,
               count: countAthletes,
             });
@@ -51,6 +54,7 @@ class CreateModalityRelatoryService {
         );
         if (modalityRelatory.length === 0) return delegation;
         finalRelatory.push({
+          delegation_id: delegation.id,
           delegation: `${delegation.abreviation}`,
           relatory: modalityRelatory,
         });
