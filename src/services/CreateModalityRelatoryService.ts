@@ -38,6 +38,7 @@ class CreateModalityRelatoryService {
               .createQueryBuilder('athlete')
               .leftJoinAndSelect('athlete.modalities', 'modality')
               .where('modality.id = :id', { id })
+              .where('delegation_id = :id', { id: delegation.id })
               .getCount();
             if (countAthletes === 0) return modality;
             modalityRelatory.push({
