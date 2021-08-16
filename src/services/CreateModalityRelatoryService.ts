@@ -37,8 +37,10 @@ class CreateModalityRelatoryService {
             countAthletes = await athleteRepository
               .createQueryBuilder('athlete')
               .leftJoinAndSelect('athlete.modalities', 'modality')
-              .where('modality.id = :id', { id })
-              .where('delegation_id = :id', { id: delegation.id })
+              .where('modality.id = :id and delegation_id = :delegation', {
+                id,
+                delegation: delegation.id,
+              })
               .getCount();
             if (countAthletes === 0) return modality;
             modalityRelatory.push({

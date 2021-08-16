@@ -2,10 +2,10 @@ import { createConnection } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 createConnection({
-  type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'postgres',
+  type: 'mysql',
+  host: '172.17.0.2',
+  port: 3306,
+  username: 'root',
   password: 'docker',
   database: 'jif',
   entities: ['./src/models/*.ts'],
