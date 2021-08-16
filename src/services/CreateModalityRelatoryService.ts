@@ -29,7 +29,6 @@ class CreateModalityRelatoryService {
     const athleteRepository = getRepository(Athlete);
     await Promise.all(
       delegations.map(async delegation => {
-        modalityRelatory = [];
         countAthletes = 0;
         await Promise.all(
           modalities.map(async modality => {
@@ -54,6 +53,8 @@ class CreateModalityRelatoryService {
           delegation: `${delegation.abreviation}`,
           relatory: modalityRelatory,
         });
+        modalityRelatory = [];
+        modalityRepository.clear();
         return delegation;
       }),
     );
