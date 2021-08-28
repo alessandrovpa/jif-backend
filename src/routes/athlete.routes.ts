@@ -10,6 +10,7 @@ import UpdateAthleteStatusService from '../services/UpdateAthleteStatusService';
 import DeleteAthleteService from '../services/DeleteAthleteService';
 import UpdateAthleteService from '../services/UpdateAthleteService';
 import ListAthleteByDelegationAndModalityService from '../services/ListAthleteByDelegationAndModalityService';
+import ListAthletesByModality from '../services/ListAthletesByModality';
 
 const upload = multer(uploadConfig);
 
@@ -55,6 +56,7 @@ athleteRouter.post(
     { name: 'authorization', maxCount: 1 },
   ]),
   async (req, res) => {
+    throw new AppError('Inscrições encerradas!');
     const { athlete_id } = req.body;
     const { delegation_id } = req.user;
 
@@ -96,6 +98,7 @@ athleteRouter.get('/', async (req, res) => {
   const findAthlete = new FindAthleteService();
   const listAthletesByDelegationAndModality =
     new ListAthleteByDelegationAndModalityService();
+  const listAthletesByModality = new ListAthletesByModality();
   let { delegation_id, athlete_id, modality_id } = req.query;
 
   if (athlete_id) {
@@ -111,10 +114,14 @@ athleteRouter.get('/', async (req, res) => {
     if (req.user.access > 1) {
       throw new AppError('Permission denied');
     }
-    const athletes = await listAthletesByDelegationAndModality.execute({
-      delegation_id,
-      modality_id,
-    });
+    if (delegation_id) {
+      const athletes = await listAthletesByDelegationAndModality.execute({
+        delegation_id,
+        modality_id,
+      });
+      return res.json(athletes);
+    }
+    const athletes = await listAthletesByModality.execute(modality_id);
     return res.json(athletes);
   }
   if (delegation_id) {
