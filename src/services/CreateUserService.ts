@@ -6,6 +6,8 @@ import UserFunction from '../models/Function';
 import AppError from '../errors/AppError';
 import { classToClass } from 'class-transformer';
 
+import formatContact from '../utils/formatContact';
+
 interface RequestDTO {
   name: string;
   email: string;
@@ -56,7 +58,7 @@ class CreateUserService {
       email,
       siape,
       password: hashedPassword,
-      contact,
+      contact: formatContact(contact),
       delegation_id,
       access: userFunction.access,
       function: userFunction.name,

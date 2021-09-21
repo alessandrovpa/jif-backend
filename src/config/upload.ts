@@ -68,6 +68,15 @@ const athleteAuthorizationFolder = path.resolve(
   'authorization',
 );
 
+const certifiedFolder = path.resolve(
+  __dirname,
+  '..',
+  '..',
+  'tmp',
+  'files',
+  'certified',
+);
+
 export default {
   directory: tmpFolder,
 
@@ -79,6 +88,8 @@ export default {
   athleteDocumentFolder,
   athleteDocumentBackFolder,
   athleteAuthorizationFolder,
+
+  certifiedFolder,
 
   storage: multer.diskStorage({
     destination: tmpFolder,

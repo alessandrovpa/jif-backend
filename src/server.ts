@@ -14,6 +14,8 @@ import './database';
 app.use(cors());
 app.use(express.json());
 
+app.use('/certified', express.static(uploadConfig.certifiedFolder));
+
 app.use(
   '/files/user/portaria',
   express.static(uploadConfig.userPortariaFolder),

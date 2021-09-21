@@ -7,6 +7,7 @@ import athleteRouter from './athlete.routes';
 import modalityRouter from './modality.routes';
 import functionRouter from './function.routes';
 import relatoryRouter from './relatory.routes';
+import certtifiedRouter from './certified.routes';
 
 import CreateDefaultADMUser from '../services/CreateDefaultADMUser';
 
@@ -20,6 +21,7 @@ routes.get('/user/admin', async (req, res) => {
   const user = await createADM.execute();
   return res.json({ email: user.email });
 });
+routes.use('/certified', certtifiedRouter);
 
 routes.use(verifyAutenticated);
 routes.use('/athlete', athleteRouter);

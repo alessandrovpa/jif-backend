@@ -12,6 +12,11 @@ tmp/files/*
 tmp/files/user/*
 !tmp/files/user/.gitkeep
 
+!tmp/files/certified
+tmp/files/certified/*
+!tmp/files/certified/.gitkeep
+
+
 !tmp/files/user/document
 tmp/files/user/document/*
 !tmp/files/user/document/.gitkeep
